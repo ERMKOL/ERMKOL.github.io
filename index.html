@@ -460,7 +460,7 @@
     </div>
   </div>
 
-  <!-- Новая форма для отзыва (Telegram + Google Sheets) -->
+  <!-- Форма для отзыва (только Telegram, без записи в лист) -->
   <div class="container">
     <div class="form-card" style="margin-top: 20px;">
       <h3 style="text-align: center; margin-bottom: 20px;">✍️ Оставить отзыв</h3>
@@ -503,10 +503,9 @@
 </footer>
 
 <script>
-  // ================== ТЕЛЕГРАМ + SHEETS ДЛЯ ЗАЯВОК ==================
+  // ================== ТЕЛЕГРАМ ДЛЯ ЗАЯВОК ==================
   (function() {
-    // ⚠️ ВСТАВЬТЕ СВОЙ ТОКЕН БОТА
-    const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';   // замените на реальный
+    const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';
     const CHAT_ID = '2018628963';
     const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';
 
@@ -580,12 +579,11 @@
     });
   })();
 
-  // ================== ФОРМА ОТЗЫВА (TELEGRAM + SHEET.BEST) ==================
+  // ================== ФОРМА ОТЗЫВА (ТОЛЬКО TELEGRAM, БЕЗ SHEET.BEST) ==================
   (function() {
-    const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';   // тот же токен
+    const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';
     const CHAT_ID = '2018628963';
     const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';
-    const SHEETBEST_API = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
 
     const form = document.getElementById('reviewForm');
     const nameInput = document.getElementById('reviewName');
@@ -611,44 +609,23 @@
         return;
       }
       let authorName = nameInput.value.trim();
-      const isAnonymous = (authorName === '');
-      const displayName = isAnonymous ? 'Аноним' : authorName;
+      const displayName = authorName === '' ? 'Аноним' : authorName;
       const rating = parseInt(ratingSelect.value, 10);
-
-      // Уведомление в Telegram
       const stars = '★'.repeat(rating) + '☆'.repeat(5-rating);
       const tgMessage = `⭐ <b>Новый отзыв!</b>\n\n👤 <b>Имя:</b> ${escapeHtml(displayName)}\n📊 <b>Оценка:</b> ${stars} (${rating}/5)\n💬 <b>Текст:</b>\n${escapeHtml(reviewText)}`;
       
       messageDiv.innerHTML = '<div class="success-msg">⏳ Отправка отзыва...</div>';
       try {
-        // 1. Отправляем в Telegram
-        const tgResponse = await fetch(WORKER_URL, {
+        const response = await fetch(WORKER_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ botToken: BOT_TOKEN, chatId: CHAT_ID, message: tgMessage })
         });
-        const tgResult = await tgResponse.json();
-        if (!tgResponse.ok || !tgResult.ok) throw new Error('Telegram error');
-
-        // 2. Добавляем строку в Google Sheets через sheet.best
-        const newRow = {
-          'Ваше имя': authorName,           // если пусто, в таблицу уйдёт пустая строка (потом при отображении станет Аноним)
-          'Оценка': rating,
-          'Текст отзыва': reviewText
-        };
-        const sheetResponse = await fetch(SHEETBEST_API, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(newRow)
-        });
-        if (!sheetResponse.ok) throw new Error('Sheet.best error');
+        const result = await response.json();
+        if (!response.ok || !result.ok) throw new Error('Telegram error');
         
-        messageDiv.innerHTML = '<div class="success-msg">✅ Спасибо за отзыв! Он появится на сайте после обновления страницы.</div>';
+        messageDiv.innerHTML = '<div class="success-msg">✅ Спасибо за отзыв! Он отправлен в Telegram. На сайте он появится после ручного добавления.</div>';
         form.reset();
-        // Принудительно перезагружаем список отзывов через 2 секунды (чтобы увидеть новый)
-        setTimeout(() => {
-          loadReviews(); // функция объявлена ниже
-        }, 2000);
       } catch (error) {
         console.error(error);
         messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Ошибка при отправке отзыва. Попробуйте позже.</div>';
@@ -656,7 +633,7 @@
     });
   })();
 
-  // ================== ЗАГРУЗКА И ОТОБРАЖЕНИЕ ОТЗЫВОВ (sheet.best) ==================
+  // ================== ЗАГРУЗКА И ОТОБРАЖЕНИЕ ОТЗЫВОВ ИЗ SHEET.BEST (ТОЛЬКО ЧТЕНИЕ) ==================
   const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
   let allReviews = [];
   let showingAll = false;
@@ -690,7 +667,7 @@
       for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
       const escapeHtml = (str) => {
         if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
+<!DOCTYPE html>return str.replace(/[&<>]/g, function(m) {
           if (m === '&') return '&amp;';
           if (m === '<') return '&lt;';
           if (m === '>') return '&gt;';
