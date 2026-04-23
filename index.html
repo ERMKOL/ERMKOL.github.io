@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html lang="ru">
-<голова>
-  <мета набор символов="УТФ-8">
-  <мета имя="область просмотра" содержание="ширина=ширина устройства, начальный масштаб=1,0, максимальный масштаб=1,0, масштабируемый пользователем=да">
-  <заголовок>ОЛЬГА МАССАЖ | Профессиональный массаж</заголовок>
-  <мета имя="описание" содержание="Профессиональный массаж в студии и с выездом в Валуйках. Сертифицированный мастер с медицинским образованием. Классический массаж, массаж лица. Запись онлайн.">
-  <мета имя="ключевые слова" содержание="массаж, Валуйки, массаж лица, классический массаж, выезд на дом, Ольга массаж, снять напряжение, массаж спины">
-  <связь href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&дисплей=обмен" отн="таблица стилей">
-  <стиль>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>ОЛЬГА МАССАЖ | Профессиональный массаж</title>
+  <meta name="description" content="Профессиональный массаж в студии и с выездом в Валуйках. Сертифицированный мастер с медицинским образованием. Классический массаж, массаж лица. Запись онлайн.">
+  <meta name="keywords" content="массаж, Валуйки, массаж лица, классический массаж, выезд на дом, Ольга массаж, снять напряжение, массаж спины">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <style>
     * {
-      маржа: 0;
-      прокладка: 0;
-      размер коробки: пограничная коробка;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
-    тело {
-      семейство шрифтов: «Интер», без засечек;
-      цвет фона: #fefcf8;
-      цвет: #2c2418;
-      высота линии: 1.4;
-      поведение прокрутки: гладкий;
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fefcf8;
+      color: #2c2418;
+      line-height: 1.4;
+      scroll-behavior: smooth;
     }
-    .контейнер {
-      максимальная ширина: 1280пх;
-      маржа: 0 авто;
-      прокладка: 0 24пх;
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
     }
-    ч1, h2, h3 {
-      вес шрифта: 700;
-      межбуквенный интервал: -0,02эм;
+    h1, h2, h3 {
+      font-weight: 700;
+      letter-spacing: -0.02em;
     }
-    ч1 {
-      размер шрифта: зажим(2.4бэр, 6вв, 3.8бэр);
-      высота линии: 1.2;
-      маржа-дно: 1бэр;
+    h1 {
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      line-height: 1.2;
+      margin-bottom: 1rem;
     }
     h2 {
-      размер шрифта: зажим(1,8бэр, 5вв, 2,5бэр);
-      маржа-дно: 1бэр;
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      margin-bottom: 1rem;
     }
-    .название раздела {
-      выравнивание текста: центр;
-      маржа-дно: 2,5бэр;
-      позиция: родственник;
+    .section-title {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      position: relative;
     }
-    .название раздела:после {
-      содержание: '';
-      отображать: блокировать;
-      ширина: 70пх;
-      высота: 4пх;
-      фон: #c7a17a;
-      маржа: 0,8бэр авто 0;
-      радиус границы: 4пх;
+    .section-title:after {
+      content: '';
+      display: block;
+      width: 70px;
+      height: 4px;
+      background: #c7a17a;
+      margin: 0.8rem auto 0;
+      border-radius: 4px;
     }
-    .бтн {
-      отображать: линейный-гибкий;
-      выравнивание элементов: центр;
-      оправдать-содержание: центр;
-      зазор: 8пх;
-      фон: #c7a17a;
-      цвет: белый;
-      вес шрифта: 600;
-      размер шрифта: 1бэр;
-      прокладка: 14пх 32пх;
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: #c7a17a;
+      color: white;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 14px 32px;
       border-radius: 60px;
       text-decoration: none;
       transition: 0.25s ease;
@@ -504,25 +504,25 @@
     container.innerHTML = reviewsHtml;
 
     // Управление кнопкой
-<!ДОКТИП html>если (нужнаКнопка) {
-      btnКонтейнер.внутреннийHTML = `<button class="show-more-btn" id="showAllBtn">📖 Показ все точек (${всеОбзоры.длина})</кнопка>`;
-      константа показатьAllBtn = документ.getElementById('showAllBtn');
-      если (показатьAllBtn) {
-        показатьAllBtn.addEventListener('нажмите', () => {
-          показВсе = истинный;
+    if (needButton) {
+      btnContainer.innerHTML = `<button class="show-more-btn" id="showAllBtn">📖 Показать все отзывы (${allReviews.length})</button>`;
+      const showAllBtn = document.getElementById('showAllBtn');
+      if (showAllBtn) {
+        showAllBtn.addEventListener('click', () => {
+          showingAll = true;
           renderReviews(); // перерисовываем с показом всех
         });
       }
-    } еще {
+    } else {
       // Если показываем все или отзывов <=3, кнопку убираем
-      btnКонтейнер.внутреннийHTML = '';
+      btnContainer.innerHTML = '';
       // Если мы показываем все и отзывов больше 3, можно добавить кнопку "Свернуть" (опционально)
-      если (показВсе && всеОбзоры.длина > 3) {
-        btnКонтейнер.внутреннийHTML = `<button class="show-more-btn" id="hideBtn">⬆️ Свернуть на страницы 3</button>`;
-        константа скрытьBtn = документ.getElementById('hideBtn');
-        если (скрытьBtn) {
-          скрытьBtn.addEventListener('нажмите', () => {
-            показВсе = ложный;
+      if (showingAll && allReviews.length > 3) {
+        btnContainer.innerHTML = `<button class="show-more-btn" id="hideBtn">⬆️ Свернуть до последних 3</button>`;
+        const hideBtn = document.getElementById('hideBtn');
+        if (hideBtn) {
+          hideBtn.addEventListener('click', () => {
+            showingAll = false;
             renderReviews();
           });
         }
@@ -531,37 +531,37 @@
   }
 
   // Загрузка отзывов из API
-  асинхронный функция loadReviews() {
-    константа контейнер = документ.getElementById('обзорыКонтейнер');
-    если (!контейнер) возвращаться;
-    контейнер.внутреннийHTML = '<div style="text-align: center;">Загрузка отзывов...</div>';
-    пытаться {
-      константа ответ = ждать принести(ОБЗОРЫ_API_URL);
-      константа обзоры = ждать ответ.джонсон();
-      если (!обзоры || обзоры.длина === 0) {
-        всеОбзоры = [];
+  async function loadReviews() {
+    const container = document.getElementById('reviewsContainer');
+    if (!container) return;
+    container.innerHTML = '<div style="text-align: center;">Загрузка отзывов...</div>';
+    try {
+      const response = await fetch(REVIEWS_API_URL);
+      const reviews = await response.json();
+      if (!reviews || reviews.length === 0) {
+        allReviews = [];
         renderReviews();
-        возвращаться;
+        return;
       }
       // Фильтруем отзывы с пустым текстом
-      всеОбзоры = обзоры.фильтр(r => {
-        константа текст = r['Текст отзыва'] || r['текст'] || '';
-        возвращаться текст.подрезать() !== '';
+      allReviews = reviews.filter(r => {
+        const txt = r['Текст отзыва'] || r['text'] || '';
+        return txt.trim() !== '';
       });
       // Сортируем по времени? API может возвращать в порядке добавления, оставляем как есть (последние в конце)
       // Убедимся, что порядок: сначала старые, новые в конце. Просто оставляем.
-      показВсе = ложный;
+      showingAll = false;
       renderReviews();
-    } ловить (ошибка) {
-      консоль.ошибка('Ошибка загрузки отзывов:', ошибка);
-      контейнер.внутреннийHTML = `<div style="выравнивание текста: центр; цвет: #b13e2d;">
- <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
- </див>`;
-      документ.getElementById('showMoreBtnContainer').внутреннийHTML = '';
+    } catch (error) {
+      console.error('Ошибка загрузки отзывов:', error);
+      container.innerHTML = `<div style="text-align: center; color: #b13e2d;">
+        <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+      </div>`;
+      document.getElementById('showMoreBtnContainer').innerHTML = '';
     }
   }
   
   loadReviews();
-</сценарий>
-</тело>
-  </html>
+</script>
+</body>
+</html>
