@@ -361,7 +361,6 @@
 </header>
 
 <main>
-  <!-- Hero секция -->
   <div class="container">
     <div class="hero">
       <div class="hero-content">
@@ -373,7 +372,6 @@
     </div>
   </div>
 
-  <!-- Преимущества -->
   <div class="features">
     <div class="container">
       <div class="section-title"><h2>Почему выбирают меня</h2></div>
@@ -386,7 +384,6 @@
     </div>
   </div>
 
-  <!-- Услуги (без кнопок) -->
   <div class="services" id="services">
     <div class="container">
       <div class="section-title"><h2>Мои массажные программы</h2></div>
@@ -405,7 +402,6 @@
     </div>
   </div>
 
-  <!-- Блок "О нас" + динамические отзывы -->
   <div class="why-us" id="why">
     <div class="container">
       <div class="row">
@@ -460,7 +456,7 @@
     </div>
   </div>
 
-  <!-- Форма для отзыва (только Telegram, без записи в лист) -->
+  <!-- Форма для отзыва (только Telegram, без sheet.best) -->
   <div class="container">
     <div class="form-card" style="margin-top: 20px;">
       <h3 style="text-align: center; margin-bottom: 20px;">✍️ Оставить отзыв</h3>
@@ -503,7 +499,7 @@
 </footer>
 
 <script>
-  // ================== ТЕЛЕГРАМ ДЛЯ ЗАЯВОК ==================
+  // ================== ЗАЯВКИ В TELEGRAM ==================
   (function() {
     const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';
     const CHAT_ID = '2018628963';
@@ -579,7 +575,7 @@
     });
   })();
 
-  // ================== ФОРМА ОТЗЫВА (ТОЛЬКО TELEGRAM, БЕЗ SHEET.BEST) ==================
+  // ================== ОТЗЫВЫ ТОЛЬКО В TELEGRAM (БЕЗ SHEET.BEST) ==================
   (function() {
     const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';
     const CHAT_ID = '2018628963';
@@ -624,7 +620,7 @@
         const result = await response.json();
         if (!response.ok || !result.ok) throw new Error('Telegram error');
         
-        messageDiv.innerHTML = '<div class="success-msg">✅ Спасибо за отзыв! Он отправлен в Telegram. На сайте он появится после ручного добавления.</div>';
+        messageDiv.innerHTML = '<div class="success-msg">✅ Спасибо за отзыв! Он отправлен в Telegram. На сайте появится после ручного добавления.</div>';
         form.reset();
       } catch (error) {
         console.error(error);
@@ -633,7 +629,7 @@
     });
   })();
 
-  // ================== ЗАГРУЗКА И ОТОБРАЖЕНИЕ ОТЗЫВОВ ИЗ SHEET.BEST (ТОЛЬКО ЧТЕНИЕ) ==================
+  // ================== ЗАГРУЗКА ОТЗЫВОВ ИЗ SHEET.BEST (ТОЛЬКО ЧТЕНИЕ) ==================
   const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
   let allReviews = [];
   let showingAll = false;
@@ -667,7 +663,7 @@
       for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
       const escapeHtml = (str) => {
         if (!str) return '';
-<!DOCTYPE html>return str.replace(/[&<>]/g, function(m) {
+        return str.replace(/[&<>]/g, function(m) {
           if (m === '&') return '&amp;';
           if (m === '<') return '&lt;';
           if (m === '>') return '&gt;';
