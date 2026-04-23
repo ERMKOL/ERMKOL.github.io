@@ -494,16 +494,16 @@
   </iframe>
 </div>
 <div class="form-card" style="margin-top: 40px;">
-  <h3 style="text-align: center; margin-bottom: 20px;">Оставьте свой отзыв</h3>
-  <div style="position: relative; overflow: hidden; width: 100%;padding-top: 100%; /* можно менять процент */">
+  <div style="position: relative; overflow: hidden; width: 100%; padding-top: 100%; /* можно менять процент */">
   <iframe 
-    src="https://forms.gle/r2M2s6weo7HRsZK97" 
-    style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100% ; border: none;"
+    src="https://docs.google.com/spreadsheets/d/1rEucez0Cah-P3CAXwJaUGuYx-VGoKU6RHgtlGGCNB_g/edit?usp=sharing" 
+    style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none;"
     frameborder="0"
     marginheight="0"
     marginwidth="0"
     scrolling="auto">
   </iframe>
+</div>
 </div>
 </div>
 
@@ -611,58 +611,76 @@
   const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
 
   async function loadReviews() {
-    try {
-      const response = await fetch(REVIEWS_API_URL);
-      const reviews = await response.json();
+  try {
+    const response = await fetch(REVIEWS_API_URL);
+    const reviews = await response.json();
+    
+    const container = document.getElementById('reviewsContainer');
+    if (!reviews || reviews.length === 0) {
+      container.innerHTML = `<div style="text-align: center; color: #7a6a5a;">
+        <div style="font-size: 3rem;">💬</div>
+        <p>Пока нет отзывов. Будьте первым!</p>
+      </div>`;
+      return;
+    }
+    
+    // Показываем последние 5 отзывов (самые новые сверху)
+    const latestReviews = [...reviews].reverse().slice(0, 5);
+    
+    let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
+    
+    for (const review of latestReviews) {
+      const reviewText = review['Текст отзыва'] || review['text'] || '';
+      if (!reviewText.trim()) continue; // пропускаем пустые отзывы
       
-      // Если отзывов нет, покажем сообщение
-      if (!reviews || reviews.length === 0) {
-        document.getElementById('reviewsContainer').innerHTML = `
-          <div style="text-align: center; color: #7a6a5a;">
-            <div style="font-size: 3rem;">💬</div>
-            <p>Пока нет отзывов. Будьте первым!</p>
-          </div>
-        `;
-        return;
+      // --- Обработка имени (аноним, если не указано) ---
+      let authorName = review['Имя'] || review['name'] || '';
+      authorName = authorName.trim();
+      if (authorName === '') {
+        authorName = 'Аноним';
       }
       
-      // Ограничим количество показываемых отзывов (например, последние 5)
-      const latestReviews = reviews.slice(-5).reverse();
+      // --- Оценка (звёзды) ---
+      let rating = parseInt(review['Оценка']) || 5;
+      rating = Math.min(5, Math.max(1, rating)); // от 1 до 5
+      let ratingStars = '';
+      for (let i = 1; i <= 5; i++) {
+        ratingStars += i <= rating ? '★' : '☆';
+      }
       
-      // Создаём HTML для отзывов (можно добавить слайдер, но пока просто список)
-      let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
-      latestReviews.forEach(review => {
-        // Поля в таблице: предположим, столбцы: Текст отзыва, Имя, Оценка
-        // Названия столбцов нужно подставить свои (как в шапке вашей таблицы)
-        const reviewText = review['Текст отзыва'] || review['text'] || '';
-        const authorName = review['Имя'] || review['name'] || 'Аноним';
-        let ratingStars = '';
-        const rating = parseInt(review['Оценка']) || 5;
-        for (let i = 1; i <= 5; i++) {
-          ratingStars += i <= rating ? '★' : '☆';
-        }
-        
-        reviewsHtml += `
-          <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
-            <p style="font-style: italic; margin: 0 0 8px 0;">«${reviewText}»</p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong>— ${authorName}</strong>
-              <span style="color: #c7a17a;">${ratingStars}</span>
-            </div>
+      reviewsHtml += `
+        <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
+          <p style="font-style: italic; margin: 0 0 8px 0;">«${escapeHtml(reviewText)}»</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong>— ${escapeHtml(authorName)}</strong>
+            <span style="color: #c7a17a;">${ratingStars}</span>
           </div>
-        `;
-      });
-      
-      document.getElementById('reviewsContainer').innerHTML = reviewsHtml;
-    } catch (error) {
-      console.error('Ошибка загрузки отзывов:', error);
-      document.getElementById('reviewsContainer').innerHTML = `
-        <div style="text-align: center; color: #b13e2d;">
-          <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
         </div>
       `;
     }
+    
+    container.innerHTML = reviewsHtml;
+  } catch (error) {
+    console.error('Ошибка загрузки отзывов:', error);
+    document.getElementById('reviewsContainer').innerHTML = `
+      <div style="text-align: center; color: #b13e2d;">
+        <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+      </div>
+    `;
   }
+}
+
+// Простейшая защита от XSS через экранирование HTML
+function escapeHtml(str) {
+  return str.replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
+    return c;
+  });
+}
   
   loadReviews();
 </script>
