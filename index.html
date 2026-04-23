@@ -8,6 +8,7 @@
   <meta name="keywords" content="массаж, Валуйки, массаж лица, классический массаж, выезд на дом, Ольга массаж, снять напряжение, массаж спины">
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <style>
+    /* ===== ВСЕ ВАШИ СТИЛИ (БЕЗ ИЗМЕНЕНИЙ) ===== */
     * {
       margin: 0;
       padding: 0;
@@ -73,15 +74,6 @@
       background: #b48b5f;
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(199, 161, 122, 0.3);
-    }
-    .btn-outline {
-      background: transparent;
-      border: 2px solid #c7a17a;
-      color: #c7a17a;
-    }
-    .btn-outline:hover {
-      background: #c7a17a;
-      color: white;
     }
     .navbar {
       display: flex;
@@ -272,6 +264,44 @@
       box-shadow: 0 20px 40px rgba(0,0,0,0.05);
       border: 1px solid #ece2d7;
     }
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      padding: 14px 18px;
+      border-radius: 32px;
+      border: 1px solid #e2d5c8;
+      font-size: 1rem;
+      background: #fefcf9;
+      transition: 0.2s;
+      font-family: inherit;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #c7a17a;
+      box-shadow: 0 0 0 3px rgba(199,161,122,0.2);
+    }
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .form-submit {
+      width: 100%;
+      background: #c7a17a;
+      font-size: 1.1rem;
+      padding: 16px;
+    }
+    .success-msg {
+      background: #e0f2e9;
+      color: #2c6e49;
+      padding: 12px;
+      border-radius: 60px;
+      text-align: center;
+      margin-top: 16px;
+      font-weight: 500;
+    }
     footer {
       background: #2c2418;
       color: #ddd2c4;
@@ -375,7 +405,7 @@
     </div>
   </div>
 
-  <!-- Блок "О нас" + динамические отзывы с кнопкой "Показать все" -->
+  <!-- Блок "О нас" + динамические отзывы -->
   <div class="why-us" id="why">
     <div class="container">
       <div class="row">
@@ -396,35 +426,66 @@
     </div>
   </div>
 
-  <!-- Форма записи (Google Forms) – с якорем #booking -->
+  <!-- Форма записи на массаж (Telegram) -->
   <div class="container" id="booking">
     <div class="form-card">
-      <div style="position: relative; overflow: hidden; width: 100%; padding-top: 150%;">
-        <iframe 
-          src="https://forms.gle/WB4A4DNRHUuhP8ut8" 
-          style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none;"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          scrolling="no">
-        </iframe>
-      </div>
+      <h3 style="text-align: center; margin-bottom: 20px;">📝 Быстрая запись на массаж</h3>
+      <form id="tgForm">
+        <div class="form-group">
+          <label>Ваше имя *</label>
+          <input type="text" id="tgName" placeholder="Александра" required>
+        </div>
+        <div class="form-group">
+          <label>Номер телефона *</label>
+          <input type="tel" id="tgPhone" placeholder="+7 (999) 123-45-67" required>
+        </div>
+        <div class="form-group">
+          <label>Выберите услугу</label>
+          <select id="tgService">
+            <option value="Классический массаж (2000₽/60 мин)">Классический массаж — от 2000₽ / 60 мин</option>
+            <option value="Массаж лица (1000₽/30 мин)">Массаж лица — от 1000₽ / 30 мин</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Удобная дата и время</label>
+          <input type="datetime-local" id="tgDateTime" required>
+        </div>
+        <div class="form-group">
+          <label>Дополнительные пожелания</label>
+          <textarea id="tgComment" rows="2" placeholder="Пожелания по зонам, силе массажа и т.д."></textarea>
+        </div>
+        <button type="submit" class="btn form-submit">📅 Отправить заявку в Telegram</button>
+        <div id="tgFormMessage" style="margin-top: 16px; font-size: 0.9rem;"></div>
+      </form>
     </div>
   </div>
 
-  <!-- Форма для отзывов (Google Forms) -->
+  <!-- Новая форма для отзыва (Telegram + Google Sheets) -->
   <div class="container">
     <div class="form-card" style="margin-top: 20px;">
-      <div style="position: relative; overflow: hidden; width: 100%; padding-top: 100%;">
-        <iframe 
-          src="https://forms.gle/XWarT7GTTxDRb7BX9" 
-          style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none;"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          scrolling="no">
-        </iframe>
-      </div>
+      <h3 style="text-align: center; margin-bottom: 20px;">✍️ Оставить отзыв</h3>
+      <form id="reviewForm">
+        <div class="form-group">
+          <label>Ваше имя (необязательно, будет отображаться как "Аноним")</label>
+          <input type="text" id="reviewName" placeholder="Например, Анна">
+        </div>
+        <div class="form-group">
+          <label>Оценка *</label>
+          <select id="reviewRating" required>
+            <option value="5">★★★★★ 5 — Отлично</option>
+            <option value="4">★★★★☆ 4 — Хорошо</option>
+            <option value="3">★★★☆☆ 3 — Средне</option>
+            <option value="2">★★☆☆☆ 2 — Плохо</option>
+            <option value="1">★☆☆☆☆ 1 — Ужасно</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Текст отзыва *</label>
+          <textarea id="reviewText" rows="3" placeholder="Расскажите о вашем опыте..." required></textarea>
+        </div>
+        <button type="submit" class="btn form-submit">✉️ Отправить отзыв</button>
+        <div id="reviewFormMessage" style="margin-top: 16px; font-size: 0.9rem;"></div>
+      </form>
     </div>
   </div>
 </main>
@@ -442,11 +503,164 @@
 </footer>
 
 <script>
-  const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
-  let allReviews = [];      // храним все отзывы
-  let showingAll = false;   // состояние: показываем все или только 3
+  // ================== ТЕЛЕГРАМ + SHEETS ДЛЯ ЗАЯВОК ==================
+  (function() {
+    // ⚠️ ВСТАВЬТЕ СВОЙ ТОКЕН БОТА
+    const BOT_TOKEN = 'https://ermkol.bigbob12113.workers.dev';   // замените на реальный
+    const CHAT_ID = '2018628963';
+    const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';
 
-  // Функция отрисовки отзывов на основе текущего состояния
+    const form = document.getElementById('tgForm');
+    const nameInput = document.getElementById('tgName');
+    const phoneInput = document.getElementById('tgPhone');
+    const serviceSelect = document.getElementById('tgService');
+    const dateTimeInput = document.getElementById('tgDateTime');
+    const commentInput = document.getElementById('tgComment');
+    const messageDiv = document.getElementById('tgFormMessage');
+
+    if (dateTimeInput) {
+      const now = new Date();
+      now.setHours(now.getHours() + 2);
+      const y = now.getFullYear();
+      const m = String(now.getMonth() + 1).padStart(2, '0');
+      const d = String(now.getDate()).padStart(2, '0');
+      const h = String(now.getHours()).padStart(2, '0');
+      const min = String(now.getMinutes()).padStart(2, '0');
+      dateTimeInput.value = `${y}-${m}-${d}T${h}:${min}`;
+      dateTimeInput.min = `${y}-${m}-${d}T00:00`;
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = nameInput.value.trim();
+      const phone = phoneInput.value.trim();
+      if (!name || !phone) {
+        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Пожалуйста, укажите имя и телефон!</div>';
+        return;
+      }
+      const service = serviceSelect.options[serviceSelect.selectedIndex]?.text || 'Не выбрана';
+      const datetime = dateTimeInput.value ? dateTimeInput.value.replace('T', ' ') : 'Не указано';
+      const comment = commentInput.value.trim() || '—';
+      const messageText = `📝 <b>Новая заявка на массаж!</b>\n\n👤 <b>Имя:</b> ${escapeHtml(name)}\n📞 <b>Телефон:</b> ${escapeHtml(phone)}\n💆‍♀️ <b>Услуга:</b> ${escapeHtml(service)}\n📅 <b>Дата/время:</b> ${escapeHtml(datetime)}\n💬 <b>Пожелания:</b> ${escapeHtml(comment)}`;
+      
+      messageDiv.innerHTML = '<div class="success-msg">⏳ Отправка заявки...</div>';
+      try {
+        const response = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ botToken: BOT_TOKEN, chatId: CHAT_ID, message: messageText })
+        });
+        const result = await response.json();
+        if (response.ok && result.ok) {
+          messageDiv.innerHTML = '<div class="success-msg">✅ Заявка отправлена! Я свяжусь с вами.</div>';
+          form.reset();
+          if (dateTimeInput) {
+            const newDate = new Date();
+            newDate.setHours(newDate.getHours() + 2);
+            const y = newDate.getFullYear(), m = String(newDate.getMonth()+1).padStart(2,'0'), d = String(newDate.getDate()).padStart(2,'0');
+            const h = String(newDate.getHours()).padStart(2,'0'), min = String(newDate.getMinutes()).padStart(2,'0');
+            dateTimeInput.value = `${y}-${m}-${d}T${h}:${min}`;
+          }
+        } else {
+          throw new Error('Telegram error');
+        }
+      } catch (error) {
+        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Ошибка при отправке. Попробуйте позже.</div>';
+      }
+    });
+  })();
+
+  // ================== ФОРМА ОТЗЫВА (TELEGRAM + SHEET.BEST) ==================
+  (function() {
+    const BOT_TOKEN = 'https://ermkol.bigbob12113.workers.dev';   // тот же токен
+    const CHAT_ID = '2018628963';
+    const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';
+    const SHEETBEST_API = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
+
+    const form = document.getElementById('reviewForm');
+    const nameInput = document.getElementById('reviewName');
+    const ratingSelect = document.getElementById('reviewRating');
+    const textInput = document.getElementById('reviewText');
+    const messageDiv = document.getElementById('reviewFormMessage');
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const reviewText = textInput.value.trim();
+      if (!reviewText) {
+        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Напишите текст отзыва!</div>';
+        return;
+      }
+      let authorName = nameInput.value.trim();
+      const isAnonymous = (authorName === '');
+      const displayName = isAnonymous ? 'Аноним' : authorName;
+      const rating = parseInt(ratingSelect.value, 10);
+
+      // Уведомление в Telegram
+      const stars = '★'.repeat(rating) + '☆'.repeat(5-rating);
+      const tgMessage = `⭐ <b>Новый отзыв!</b>\n\n👤 <b>Имя:</b> ${escapeHtml(displayName)}\n📊 <b>Оценка:</b> ${stars} (${rating}/5)\n💬 <b>Текст:</b>\n${escapeHtml(reviewText)}`;
+      
+      messageDiv.innerHTML = '<div class="success-msg">⏳ Отправка отзыва...</div>';
+      try {
+        // 1. Отправляем в Telegram
+        const tgResponse = await fetch(WORKER_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ botToken: BOT_TOKEN, chatId: CHAT_ID, message: tgMessage })
+        });
+        const tgResult = await tgResponse.json();
+        if (!tgResponse.ok || !tgResult.ok) throw new Error('Telegram error');
+
+        // 2. Добавляем строку в Google Sheets через sheet.best
+        const newRow = {
+          'Ваше имя': authorName,           // если пусто, в таблицу уйдёт пустая строка (потом при отображении станет Аноним)
+          'Оценка': rating,
+          'Текст отзыва': reviewText
+        };
+        const sheetResponse = await fetch(SHEETBEST_API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(newRow)
+        });
+        if (!sheetResponse.ok) throw new Error('Sheet.best error');
+        
+        messageDiv.innerHTML = '<div class="success-msg">✅ Спасибо за отзыв! Он появится на сайте после обновления страницы.</div>';
+        form.reset();
+        // Принудительно перезагружаем список отзывов через 2 секунды (чтобы увидеть новый)
+        setTimeout(() => {
+          loadReviews(); // функция объявлена ниже
+        }, 2000);
+      } catch (error) {
+        console.error(error);
+        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Ошибка при отправке отзыва. Попробуйте позже.</div>';
+      }
+    });
+  })();
+
+  // ================== ЗАГРУЗКА И ОТОБРАЖЕНИЕ ОТЗЫВОВ (sheet.best) ==================
+  const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
+  let allReviews = [];
+  let showingAll = false;
+
   function renderReviews() {
     const container = document.getElementById('reviewsContainer');
     const btnContainer = document.getElementById('showMoreBtnContainer');
@@ -461,107 +675,81 @@
       return;
     }
 
-    // Определяем, какие отзывы показывать
-    let reviewsToShow = showingAll ? allReviews : allReviews.slice(-3); // последние 3
-    // Если показываем не все, но отзывов всего 3 или меньше, кнопка не нужна
+    let reviewsToShow = showingAll ? allReviews : allReviews.slice(-3);
     const needButton = (allReviews.length > 3) && !showingAll;
-
-    // Генерируем HTML
     let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
     for (const review of reviewsToShow) {
-      const reviewText = review['Текст отзыва'] || review['text'] || '';
+      let reviewText = review['Текст отзыва'] || review['text'] || '';
       if (!reviewText.trim()) continue;
-      
       let authorName = review['Ваше имя'] || review['name'] || '';
       authorName = authorName.trim();
       if (authorName === '') authorName = 'Аноним';
-      
       let rating = parseInt(review['Оценка']) || 5;
       rating = Math.min(5, Math.max(1, rating));
       let ratingStars = '';
       for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
-      
       const escapeHtml = (str) => {
         if (!str) return '';
         return str.replace(/[&<>]/g, function(m) {
           if (m === '&') return '&amp;';
-          if (m === '<') return '&lt;';
-          if (m === '>') return '&gt;';
-          return m;
+          если (m === '<') возвращаться '&lt;';
+          если (m === '>') возвращаться '&gt;';
+          возвращаться m;
         });
       };
-      
-      reviewsHtml += `
-        <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
-          <p style="font-style: italic; margin: 0 0 8px 0;">«${escapeHtml(reviewText)}»</p>
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <strong>— ${escapeHtml(authorName)}</strong>
-            <span style="color: #c7a17a;">${ratingStars}</span>
-          </div>
-        </div>
+      отзывыHtml += `
+ <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
+ <p style="стиль шрифта: курсив; поле: 0 0 8px 0;">«${escapeHtml(обзорТекст)}»</п>
+ <div style="display: flex; justify-content: space-between; align-items: center;">
+ <сильный>— ${escapeHtml(имя автора)}</сильный>
+ <span style="цвет: #c7a17a;">${рейтингЗвезды}</охватывать>
+ </див>
+ </див>
       `;
     }
-    container.innerHTML = reviewsHtml;
-
-    // Управление кнопкой
-    if (needButton) {
-      btnContainer.innerHTML = `<button class="show-more-btn" id="showAllBtn">📖 Показать все отзывы (${allReviews.length})</button>`;
-      const showAllBtn = document.getElementById('showAllBtn');
-      if (showAllBtn) {
-        showAllBtn.addEventListener('click', () => {
-          showingAll = true;
-          renderReviews(); // перерисовываем с показом всех
-        });
-      }
-    } else {
-      // Если показываем все или отзывов <=3, кнопку убираем
-      btnContainer.innerHTML = '';
-      // Если мы показываем все и отзывов больше 3, можно добавить кнопку "Свернуть" (опционально)
-      if (showingAll && allReviews.length > 3) {
-        btnContainer.innerHTML = `<button class="show-more-btn" id="hideBtn">⬆️ Свернуть до последних 3</button>`;
-        const hideBtn = document.getElementById('hideBtn');
-        if (hideBtn) {
-          hideBtn.addEventListener('click', () => {
-            showingAll = false;
-            renderReviews();
-          });
-        }
+    контейнер.внутреннийHTML = отзывыHtml;
+    если (нужнаКнопка) {
+      btnКонтейнер.внутреннийHTML = `<button class= "show-more-btn" id= "showAllBtn">📖 Показ все отзывы (${всеОбзоры.длина})</кнопка>`;
+      константа показатьAllBtn = документ.getElementById('showAllBtn');
+      если (показатьAllBtn) показатьAllBtn.addEventListener('нажмите', () => { показВсе = истинный; renderReviews(); });
+    } еще {
+      btnКонтейнер.внутреннийHTML = '';
+      если (показВсе && всеОбзоры.длина > 3) {
+        btnКонтейнер.внутреннийHTML = `<button class="show-more-btn" id="hideBtn">⬆️ Свернуть на страницы 3</button>`;
+        константа скрытьBtn = документ.getElementById('hideBtn');
+        если (скрытьBtn) скрытьBtn.addEventListener('нажмите', () => { показВсе = ложный; renderReviews(); });
       }
     }
   }
 
-  // Загрузка отзывов из API
-  async function loadReviews() {
-    const container = document.getElementById('reviewsContainer');
-    if (!container) return;
-    container.innerHTML = '<div style="text-align: center;">Загрузка отзывов...</div>';
-    try {
-      const response = await fetch(REVIEWS_API_URL);
-      const reviews = await response.json();
-      if (!reviews || reviews.length === 0) {
-        allReviews = [];
+  асинхронный функция loadReviews() {
+    константа контейнер = документ.getElementById('обзорыКонтейнер');
+    если (!контейнер) возвращаться;
+    контейнер.внутреннийHTML = '<div style="text-align: center;">Загрузка отзывов...</div>';
+    пытаться {
+      константа ответ = ждать принести(ОБЗОРЫ_API_URL);
+      константа обзоры = ждать ответ.джонсон();
+      если (!обзоры || обзоры.длина === 0) {
+        всеОбзоры = [];
         renderReviews();
-        return;
+        возвращаться;
       }
-      // Фильтруем отзывы с пустым текстом
-      allReviews = reviews.filter(r => {
-        const txt = r['Текст отзыва'] || r['text'] || '';
-        return txt.trim() !== '';
+      всеОбзоры = обзоры.фильтр(r => {
+        константа текст = r['Текст отзыва'] || r['текст'] || '';
+        возвращаться текст.подрезать() !== '';
       });
-      // Сортируем по времени? API может возвращать в порядке добавления, оставляем как есть (последние в конце)
-      // Убедимся, что порядок: сначала старые, новые в конце. Просто оставляем.
-      showingAll = false;
+      показВсе = ложный;
       renderReviews();
-    } catch (error) {
-      console.error('Ошибка загрузки отзывов:', error);
-      container.innerHTML = `<div style="text-align: center; color: #b13e2d;">
-        <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
-      </div>`;
-      document.getElementById('showMoreBtnContainer').innerHTML = '';
+    } ловить (ошибка) {
+      консоль.ошибка('Ошибка загрузки отзывов:', ошибка);
+      контейнер.внутреннийHTML = `<div style="выравнивание текста: центр; цвет: #b13e2d;">
+ <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+ </див>`;
+      документ.getElementById('showMoreBtnContainer').внутреннийHTML = '';
     }
   }
   
   loadReviews();
-</script>
-</body>
-</html>
+</сценарий>
+</тело>
+  </html>
