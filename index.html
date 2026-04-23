@@ -456,32 +456,20 @@
     </div>
   </div>
 
-  <!-- Форма для отзыва (только Telegram, без sheet.best) -->
+  <!-- Форма для отзывов (Google Forms) -->
   <div class="container">
     <div class="form-card" style="margin-top: 20px;">
       <h3 style="text-align: center; margin-bottom: 20px;">✍️ Оставить отзыв</h3>
-      <form id="reviewForm">
-        <div class="form-group">
-          <label>Ваше имя (необязательно, будет отображаться как "Аноним")</label>
-          <input type="text" id="reviewName" placeholder="Например, Анна">
-        </div>
-        <div class="form-group">
-          <label>Оценка *</label>
-          <select id="reviewRating" required>
-            <option value="5">★★★★★ 5 — Отлично</option>
-            <option value="4">★★★★☆ 4 — Хорошо</option>
-            <option value="3">★★★☆☆ 3 — Средне</option>
-            <option value="2">★★☆☆☆ 2 — Плохо</option>
-            <option value="1">★☆☆☆☆ 1 — Ужасно</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label>Текст отзыва *</label>
-          <textarea id="reviewText" rows="3" placeholder="Расскажите о вашем опыте..." required></textarea>
-        </div>
-        <button type="submit" class="btn form-submit">✉️ Отправить отзыв</button>
-        <div id="reviewFormMessage" style="margin-top: 16px; font-size: 0.9rem;"></div>
-      </form>
+      <div style="position: relative; overflow: hidden; width: 100%; padding-top: 120%;">
+        <iframe 
+          src="https://docs.google.com/forms/d/e/1FAIpQLScXhLlYbP7I7XllX5oFyv2X9T88_9D1HtFGkY_zPj8N4jK8JQ/viewform?embedded=true" 
+          style="position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; border: none;"
+          frameborder="0"
+          marginheight="0"
+          marginwidth="0"
+          scrolling="yes">
+          </iframe>
+      </div>
     </div>
   </div>
 </main>
@@ -499,13 +487,27 @@
 </footer>
 
 <script>
-  // ================== ЗАЯВКИ В TELEGRAM ==================
-  (function() {
-    const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';
-    const CHAT_ID = '2018628963';
-    const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';
+  // ================== НАСТРОЙКИ (ЗАМЕНИТЕ НА СВОИ) ==================
+  const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';  // Ваш токен
+  const CHAT_ID = '2018628963';                                      // Ваш Chat ID
+  const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';       // URL вашего Worker
+  // =================================================================
 
+  // --- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ---
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // ================== ФОРМА ЗАЯВКИ (ТОЛЬКО TELEGRAM) ==================
+  (function() {
     const form = document.getElementById('tgForm');
+    if (!form) return;
     const nameInput = document.getElementById('tgName');
     const phoneInput = document.getElementById('tgPhone');
     const serviceSelect = document.getElementById('tgService');
@@ -525,22 +527,12 @@
       dateTimeInput.min = `${y}-${m}-${d}T00:00`;
     }
 
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-      });
-    }
-
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       const name = nameInput.value.trim();
       const phone = phoneInput.value.trim();
       if (!name || !phone) {
-        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Пожалуйста, укажите имя и телефон!</div>';
+        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Укажите имя и телефон!</div>';
         return;
       }
       const service = serviceSelect.options[serviceSelect.selectedIndex]?.text || 'Не выбрана';
@@ -575,62 +567,8 @@
     });
   })();
 
-  // ================== ОТЗЫВЫ ТОЛЬКО В TELEGRAM (БЕЗ SHEET.BEST) ==================
-  (function() {
-    const BOT_TOKEN = '8766374237:AAGalG5HxqCkmAE8eOuTCO3qrIpgjOmkyso';
-    const CHAT_ID = '2018628963';
-    const WORKER_URL = 'https://ermkol.bigbob12113.workers.dev';
-
-    const form = document.getElementById('reviewForm');
-    const nameInput = document.getElementById('reviewName');
-    const ratingSelect = document.getElementById('reviewRating');
-    const textInput = document.getElementById('reviewText');
-    const messageDiv = document.getElementById('reviewFormMessage');
-
-    function escapeHtml(str) {
-      if (!str) return '';
-      return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-      });
-    }
-
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const reviewText = textInput.value.trim();
-      if (!reviewText) {
-        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Напишите текст отзыва!</div>';
-        return;
-      }
-      let authorName = nameInput.value.trim();
-      const displayName = authorName === '' ? 'Аноним' : authorName;
-      const rating = parseInt(ratingSelect.value, 10);
-      const stars = '★'.repeat(rating) + '☆'.repeat(5-rating);
-      const tgMessage = `⭐ <b>Новый отзыв!</b>\n\n👤 <b>Имя:</b> ${escapeHtml(displayName)}\n📊 <b>Оценка:</b> ${stars} (${rating}/5)\n💬 <b>Текст:</b>\n${escapeHtml(reviewText)}`;
-      
-      messageDiv.innerHTML = '<div class="success-msg">⏳ Отправка отзыва...</div>';
-      try {
-        const response = await fetch(WORKER_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ botToken: BOT_TOKEN, chatId: CHAT_ID, message: tgMessage })
-        });
-        const result = await response.json();
-        if (!response.ok || !result.ok) throw new Error('Telegram error');
-        
-        messageDiv.innerHTML = '<div class="success-msg">✅ Спасибо за отзыв! Он отправлен в Telegram. На сайте появится после ручного добавления.</div>';
-        form.reset();
-      } catch (error) {
-        console.error(error);
-        messageDiv.innerHTML = '<div class="success-msg" style="background:#ffe3cf; color:#b13e2d;">❌ Ошибка при отправке отзыва. Попробуйте позже.</div>';
-      }
-    });
-  })();
-
-  // ================== ЗАГРУЗКА ОТЗЫВОВ ИЗ SHEET.BEST (ТОЛЬКО ЧТЕНИЕ) ==================
-  const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
+  // ================== ЗАГРУЗКА И ОТОБРАЖЕНИЕ ОТЗЫВОВ ИЗ SHEET.BEST ==================
+  const SHEETBEST_GET_URL = 'https://api.sheetbest.com/sheets/f79e3927-5693-4ac2-914f-170f4f71da7b';
   let allReviews = [];
   let showingAll = false;
 
@@ -661,15 +599,6 @@
       rating = Math.min(5, Math.max(1, rating));
       let ratingStars = '';
       for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
-      const escapeHtml = (str) => {
-        if (!str) return '';
-        return str.replace(/[&<>]/g, function(m) {
-          if (m === '&') return '&amp;';
-          if (m === '<') return '&lt;';
-          if (m === '>') return '&gt;';
-          return m;
-        });
-      };
       reviewsHtml += `
         <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
           <p style="font-style: italic; margin: 0 0 8px 0;">«${escapeHtml(reviewText)}»</p>
@@ -700,7 +629,7 @@
     if (!container) return;
     container.innerHTML = '<div style="text-align: center;">Загрузка отзывов...</div>';
     try {
-      const response = await fetch(REVIEWS_API_URL);
+      const response = await fetch(SHEETBEST_GET_URL);
       const reviews = await response.json();
       if (!reviews || reviews.length === 0) {
         allReviews = [];
