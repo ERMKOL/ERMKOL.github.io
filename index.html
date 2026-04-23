@@ -471,9 +471,9 @@
           </ul>
         </div>
         <div style="flex:1; background: #faf2e9; border-radius: 36px; padding: 28px;">
-          <div style="font-size: 3rem;">💬</div>
-          <p style="font-style: italic; margin: 1rem 0;">«После курса массажа у меня прошла боль в спине, улучшился сон. Мастер очень внимательный и приятный. Рекомендую всем!»</p>
-          <div><strong>— Иван</strong> <span style="color:#c7a17a;">★★★★★</span></div>
+          <div id="reviewsContainer" style="flex:1; background: #faf2e9; border-radius: 36px; padding: 28px;">
+  <!-- Сюда будут динамически загружаться отзывы -->
+          <div style="text-align: center;">Загрузка отзывов...</div>
         </div>
       </div>
     </div>
@@ -502,7 +502,7 @@
     frameborder="0"
     marginheight="0"
     marginwidth="0"
-    scrolling="auto">
+    scrolling="no">
   </iframe>
 </div>
 </div>
@@ -605,6 +605,66 @@
       serviceSelect.selectedIndex = 0;
     }, 600);
   });
+</script>
+    <script>
+  // Вставьте сюда ваш URL от sheet.best (или другого сервиса)
+  const REVIEWS_API_URL = 'https://sheet.best/api/sheets/ВАШ_КЛЮЧ';
+
+  async function loadReviews() {
+    try {
+      const response = await fetch(REVIEWS_API_URL);
+      const reviews = await response.json();
+      
+      // Если отзывов нет, покажем сообщение
+      if (!reviews || reviews.length === 0) {
+        document.getElementById('reviewsContainer').innerHTML = `
+          <div style="text-align: center; color: #7a6a5a;">
+            <div style="font-size: 3rem;">💬</div>
+            <p>Пока нет отзывов. Будьте первым!</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Ограничим количество показываемых отзывов (например, последние 5)
+      const latestReviews = reviews.slice(-5).reverse();
+      
+      // Создаём HTML для отзывов (можно добавить слайдер, но пока просто список)
+      let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
+      latestReviews.forEach(review => {
+        // Поля в таблице: предположим, столбцы: Текст отзыва, Имя, Оценка
+        // Названия столбцов нужно подставить свои (как в шапке вашей таблицы)
+        const reviewText = review['Текст отзыва'] || review['text'] || '';
+        const authorName = review['Имя'] || review['name'] || 'Аноним';
+        let ratingStars = '';
+        const rating = parseInt(review['Оценка']) || 5;
+        for (let i = 1; i <= 5; i++) {
+          ratingStars += i <= rating ? '★' : '☆';
+        }
+        
+        reviewsHtml += `
+          <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
+            <p style="font-style: italic; margin: 0 0 8px 0;">«${reviewText}»</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong>— ${authorName}</strong>
+              <span style="color: #c7a17a;">${ratingStars}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      document.getElementById('reviewsContainer').innerHTML = reviewsHtml;
+    } catch (error) {
+      console.error('Ошибка загрузки отзывов:', error);
+      document.getElementById('reviewsContainer').innerHTML = `
+        <div style="text-align: center; color: #b13e2d;">
+          <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+        </div>
+      `;
+    }
+  }
+  
+  loadReviews();
 </script>
 </body>
 </html>
