@@ -549,7 +549,7 @@
         });
         const result = await response.json();
         if (response.ok && result.ok) {
-          messageDiv.innerHTML = '<div class="success-msg">✅ Заявка отправлена! Я свяжусь с вами.</div>';
+          messageDiv.innerHTML = '<div class="success-msg">✅ Заявка отправлена! Я свяжусь с вами в течении дня.</div>';
           form.reset();
           if (dateTimeInput) {
             const newDate = new Date();
