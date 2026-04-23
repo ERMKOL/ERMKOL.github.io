@@ -434,73 +434,73 @@
     </div>
     <p style="font-size: 0.8rem; margin-top: 20px;">© 2026 Все права защищены. Массаж на заказ с заботой о вас.</p>
   </div>
-</нижний колонтитул>
+</footer>
 
-<сценарий>
-  //ЗАГРУЖКА ОТЗЫВОВ ИЗ GOOGLE ТАБЛИЦ (sheet.best)
-  константа ОБЗОРЫ_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
+<script>
+  // ЗАГРУЗКА ОТЗЫВОВ ИЗ GOOGLE TABLES (sheet.best)
+  const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
 
-  асинхронный функция loadReviews() {
-    константа контейнер = документ.getElementById('обзорыКонтейнер');
-    если (!контейнер) возвращаться;
-    пытаться {
-      константа ответ = ждать принести(ОБЗОРЫ_API_URL);
-      константа обзоры = ждать ответ.джонсон();
+  async function loadReviews() {
+    const container = document.getElementById('reviewsContainer');
+    if (!container) return;
+    try {
+      const response = await fetch(REVIEWS_API_URL);
+      const reviews = await response.json();
       
-      если (!обзоры || обзоры.длина === 0) {
-        контейнер.внутреннийHTML = `<div style="выравнивание текста: центр; цвет: #7a6a5a;">
- <div style="размер шрифта: 3rem;">💬</div>
- <p>Пока нѵт отзывѾв. Будьте первым!</п>
- </див>`;
-        возвращаться;
+      if (!reviews || reviews.length === 0) {
+        container.innerHTML = `<div style="text-align: center; color: #7a6a5a;">
+          <div style="font-size: 3rem;">💬</div>
+          <p>Пока нет отзывов. Будьте первым!</p>
+        </div>`;
+        return;
       }
       
-      константа последниеОбзоры = [...обзоры].обеспечить регресс().ломтик(0, 5);
-      позволять отзывыHtml = `<div style="размер шрифта: 3rem; margin-bottom: 16px;">💬</div>`;
+      const latestReviews = [...reviews].reverse().slice(0, 5);
+      let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
       
-      для (константа обзор от последниеОбзоры) {
-        константа обзорТекст = обзор['Текст отзыва'] || обзор['текст'] || '';
-        если (!обзорТекст.подрезать()) продолжать;
+      for (const review of latestReviews) {
+        const reviewText = review['Текст отзыва'] || review['text'] || '';
+        if (!reviewText.trim()) continue;
         
-        позволять имя автора = обзор['Ваше имя'] || обзор['имя'] || '';
-        имя автора = имя автора.подрезать();
-        если (имя автора === '') имя автора = 'Аноним';
+        let authorName = review['Ваше имя'] || review['name'] || '';
+        authorName = authorName.trim();
+        if (authorName === '') authorName = 'Аноним';
         
-        позволять рейтинг = parseInt(обзор['Оценка']) || 5;
-        рейтинг = Математика.мин(5, Математика.макс(1, рейтинг));
-        позволять рейтингЗвезды = '';
-        для (позволять i = 1; i <= 5; i++) рейтингЗвезды += i <= рейтинг ? '★' : '☆';
+        let rating = parseInt(review['Оценка']) || 5;
+        rating = Math.min(5, Math.max(1, rating));
+        let ratingStars = '';
+        for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
         
-        константа escapeHtml = (стр) => {
-          если (!стр) возвращаться '';
-          возвращаться стр.заменять(/[&<>]/г, функция(m) {
-            если (m === '&') возвращаться '&amp;';
-            если (m === '<') возвращаться '&lt;';
-            если (m === '>') возвращаться '&gt;';
-            возвращаться m;
+        const escapeHtml = (str) => {
+          if (!str) return '';
+          return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
           });
         };
         
-        отзывыHtml += `
- <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
- <p style="стиль шрифта: курсив; поле: 0 0 8px 0;">«${escapeHtml(обзорТекст)}»</п>
- <div style="display: flex; justify-content: space-between; align-items: center;">
- <сильный>— ${escapeHtml(имя автора)}</сильный>
- <span style="цвет: #c7a17a;">${рейтингЗвезды}</охватывать>
- </див>
- </див>
+        reviewsHtml += `
+          <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
+            <p style="font-style: italic; margin: 0 0 8px 0;">«${escapeHtml(reviewText)}»</p>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <strong>— ${escapeHtml(authorName)}</strong>
+              <span style="color: #c7a17a;">${ratingStars}</span>
+            </div>
+          </div>
         `;
       }
-      контейнер.внутреннийHTML = отзывыHtml;
-    } ловить (ошибка) {
-      консоль.ошибка('Ошибка загрузки отзывов:', ошибка);
-      контейнер.внутреннийHTML = `<div style="выравнивание текста: центр; цвет: #b13e2d;">
- <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
- </див>`;
+      container.innerHTML = reviewsHtml;
+    } catch (error) {
+      console.error('Ошибка загрузки отзывов:', error);
+      container.innerHTML = `<div style="text-align: center; color: #b13e2d;">
+        <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+      </div>`;
     }
   }
   
   loadReviews();
-</сценарий>
-</тело>
-      </html>
+</script>
+</body>
+</html>
