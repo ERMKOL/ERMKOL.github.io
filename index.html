@@ -634,7 +634,7 @@
       if (!reviewText.trim()) continue; // пропускаем пустые отзывы
       
       // --- Обработка имени (аноним, если не указано) ---
-      let authorName = review['Имя'] || review['name'] || '';
+      let authorName = review['Ваше имя'] || review['name'] || '';
       authorName = authorName.trim();
       if (authorName === '') {
         authorName = 'Аноним';
