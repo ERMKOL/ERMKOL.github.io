@@ -1,65 +1,67 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-  <title>ОЛЬГА МАССАЖ | Профессиональный массаж</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-  <style>
+<голова>
+  <мета набор символов="УТФ-8">
+  <мета имя="область просмотра" содержание="ширина=ширина устройства, начальный масштаб=1,0, максимальный масштаб=1,0, масштабируемый пользователем=да">
+  <заголовок>ОЛЬГА МАССАЖ | Профессиональный массаж</заголовок>
+  <мета имя="описание" содержание="Профессиональный массаж в студии и с выездом в Валуйках. Сертифицированный мастер с медицинским образованием. Классический массаж, массаж лица. Запись онлайн.">
+  <мета имя="ключевые слова" содержание="массаж, Валуйки, массаж лица, классический массаж, выезд на дом, Ольга массаж, снять напряжение, массаж спины">
+  <связь href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&дисплей=обмен" отн="таблица стилей">
+  <стиль>
     * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+      маржа: 0;
+      прокладка: 0;
+      размер коробки: пограничная коробка;
     }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: #fefcf8;
-      color: #2c2418;
-      line-height: 1.4;
-      scroll-behavior: smooth;
+    тело {
+      семейство шрифтов: «Интер», без засечек;
+      цвет фона: #fefcf8;
+      цвет: #2c2418;
+      высота линии: 1.4;
+      поведение прокрутки: гладкий;
     }
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 24px;
+    .контейнер {
+      максимальная ширина: 1280пх;
+      маржа: 0 авто;
+      прокладка: 0 24пх;
     }
-    h1, h2, h3 {
-      font-weight: 700;
-      letter-spacing: -0.02em;
+    ч1, h2, h3 {
+      вес шрифта: 700;
+      межбуквенный интервал: -0,02эм;
     }
-    h1 {
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      line-height: 1.2;
-      margin-bottom: 1rem;
+    ч1 {
+      размер шрифта: зажим(2.4бэр, 6вв, 3.8бэр);
+      высота линии: 1.2;
+      маржа-дно: 1бэр;
     }
     h2 {
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
-      margin-bottom: 1rem;
+      размер шрифта: зажим(1,8бэр, 5вв, 2,5бэр);
+      маржа-дно: 1бэр;
     }
-    .section-title {
-      text-align: center;
-      margin-bottom: 2.5rem;
-      position: relative;
+    .название раздела {
+      выравнивание текста: центр;
+      маржа-дно: 2,5бэр;
+      позиция: родственник;
     }
-    .section-title:after {
-      content: '';
-      display: block;
-      width: 70px;
-      height: 4px;
-      background: #c7a17a;
-      margin: 0.8rem auto 0;
-      border-radius: 4px;
+    .название раздела:после {
+      содержание: '';
+      отображать: блокировать;
+      ширина: 70пх;
+      высота: 4пх;
+      фон: #c7a17a;
+      маржа: 0,8бэр авто 0;
+      радиус границы: 4пх;
     }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      background: #c7a17a;
-      color: white;
-      font-weight: 600;
-      font-size: 1rem;
-      padding: 14px 32px;
+    .бтн {
+      отображать: линейный-гибкий;
+      выравнивание элементов: центр;
+      оправдать-содержание: центр;
+      зазор: 8пх;
+      фон: #c7a17a;
+      цвет: белый;
+      вес шрифта: 600;
+      размер шрифта: 1бэр;
+      прокладка: 14пх 32пх;
       border-radius: 60px;
       text-decoration: none;
       transition: 0.25s ease;
@@ -71,6 +73,15 @@
       background: #b48b5f;
       transform: translateY(-2px);
       box-shadow: 0 8px 20px rgba(199, 161, 122, 0.3);
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid #c7a17a;
+      color: #c7a17a;
+    }
+    .btn-outline:hover {
+      background: #c7a17a;
+      color: white;
     }
     .navbar {
       display: flex;
@@ -110,7 +121,8 @@
       gap: 40px;
     }
     .hero-content {
-      flex: 1.2;
+      flex: 1;
+      text-align: center;
     }
     .hero-badge {
       display: inline-block;
@@ -126,33 +138,9 @@
       font-size: 1.1rem;
       color: #5a4a34;
       margin: 1.5rem 0;
-      max-width: 90%;
-    }
-    .hero-stats {
-      display: flex;
-      gap: 2rem;
-      margin-top: 2rem;
-    }
-    .stat-item {
-      font-weight: 700;
-    }
-    .stat-number {
-      font-size: 1.8rem;
-      font-weight: 800;
-      color: #c7a17a;
-    }
-    .hero-image {
-      flex: 1;
-      background: linear-gradient(145deg, #e8d9cc, #fcf5ed);
-      border-radius: 48px;
-      padding: 20px;
-      text-align: center;
-      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.1);
-    }
-    .hero-image svg {
-      width: 100%;
-      max-width: 380px;
-      height: auto;
+      max-width: 80%;
+      margin-left: auto;
+      margin-right: auto;
     }
     .features {
       background: #fffaf5;
@@ -254,6 +242,27 @@
       border-radius: 50%;
       font-size: 14px;
     }
+    .reviews-wrapper {
+      flex: 1;
+      background: #faf2e9;
+      border-radius: 36px;
+      padding: 28px;
+    }
+    .show-more-btn {
+      display: inline-block;
+      margin-top: 20px;
+      background: #c7a17a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+    .show-more-btn:hover {
+      background: #b48b5f;
+    }
     .form-card {
       max-width: 600px;
       margin: 40px auto 0;
@@ -291,17 +300,16 @@
         gap: 1.2rem;
       }
       .hero {
-        flex-direction: column-reverse;
-        text-align: center;
+        flex-direction: column;
       }
       .hero-desc {
         max-width: 100%;
       }
-      .hero-stats {
-        justify-content: center;
-      }
       .form-card {
         padding: 1rem;
+      }
+      .reviews-wrapper {
+        padding: 20px;
       }
     }
   </style>
@@ -331,13 +339,7 @@
         <h1>Восстанови энергию <br> и сними стресс</h1>
         <p class="hero-desc">Профессиональный массаж на выезд или в студии. Расслабление, здоровье спины, антицеллюлитные техники — полный релакс и результат с первой процедуры.</p>
         <a href="#booking" class="btn">📅 Записаться сейчас →</a>
-        <div class="hero-stats">
-          <div class="stat-item"><span class="stat-number">500+</span><br>довольных клиентов</div>
-          <div class="stat-item"><span class="stat-number">7 лет</span><br>опыта</div>
-          <div class="stat-item"><span class="stat-number">4.98 ★</span><br>средний рейтинг</div>
-        </div>
       </div>
-      
     </div>
   </div>
 
@@ -373,7 +375,7 @@
     </div>
   </div>
 
-  <!-- Блок "О нас" + динамические отзывы -->
+  <!-- Блок "О нас" + динамические отзывы с кнопкой "Показать все" -->
   <div class="why-us" id="why">
     <div class="container">
       <div class="row">
@@ -384,8 +386,11 @@
             <li><span class="check">✓</span> График: с 9:00 до 18:00, воскресенье — выходной</li>
           </ul>
         </div>
-        <div id="reviewsContainer" style="flex:1; background: #faf2e9; border-radius: 36px; padding: 28px;">
-          <div style="text-align: center;">Загрузка отзывов...</div>
+        <div class="reviews-wrapper" id="reviewsWrapper">
+          <div id="reviewsContainer">
+            <div style="text-align: center;">Загрузка отзывов...</div>
+          </div>
+          <div id="showMoreBtnContainer" style="text-align: center;"></div>
         </div>
       </div>
     </div>
@@ -437,70 +442,126 @@
 </footer>
 
 <script>
-  // ЗАГРУЗКА ОТЗЫВОВ ИЗ GOOGLE TABLES (sheet.best)
   const REVIEWS_API_URL = 'https://api.sheetbest.com/sheets/6484638f-3162-44d3-906d-844dc405adb1';
+  let allReviews = [];      // храним все отзывы
+  let showingAll = false;   // состояние: показываем все или только 3
 
-  async function loadReviews() {
+  // Функция отрисовки отзывов на основе текущего состояния
+  function renderReviews() {
     const container = document.getElementById('reviewsContainer');
+    const btnContainer = document.getElementById('showMoreBtnContainer');
     if (!container) return;
-    try {
-      const response = await fetch(REVIEWS_API_URL);
-      const reviews = await response.json();
-      
-      if (!reviews || reviews.length === 0) {
-        container.innerHTML = `<div style="text-align: center; color: #7a6a5a;">
-          <div style="font-size: 3rem;">💬</div>
-          <p>Пока нет отзывов. Будьте первым!</p>
-        </div>`;
-        return;
-      }
-      
-      const latestReviews = [...reviews].reverse().slice(0, 5);
-      let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
-      
-      for (const review of latestReviews) {
-        const reviewText = review['Текст отзыва'] || review['text'] || '';
-        if (!reviewText.trim()) continue;
-        
-        let authorName = review['Ваше имя'] || review['name'] || '';
-        authorName = authorName.trim();
-        if (authorName === '') authorName = 'Аноним';
-        
-        let rating = parseInt(review['Оценка']) || 5;
-        rating = Math.min(5, Math.max(1, rating));
-        let ratingStars = '';
-        for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
-        
-        const escapeHtml = (str) => {
-          if (!str) return '';
-          return str.replace(/[&<>]/g, function(m) {
-            if (m === '&') return '&amp;';
-            if (m === '<') return '&lt;';
-            if (m === '>') return '&gt;';
-            return m;
-          });
-        };
-        
-        reviewsHtml += `
-          <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
-            <p style="font-style: italic; margin: 0 0 8px 0;">«${escapeHtml(reviewText)}»</p>
-            <div style="display: flex; justify-content: space-between; align-items: center;">
-              <strong>— ${escapeHtml(authorName)}</strong>
-              <span style="color: #c7a17a;">${ratingStars}</span>
-            </div>
-          </div>
-        `;
-      }
-      container.innerHTML = reviewsHtml;
-    } catch (error) {
-      console.error('Ошибка загрузки отзывов:', error);
-      container.innerHTML = `<div style="text-align: center; color: #b13e2d;">
-        <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+
+    if (!allReviews || allReviews.length === 0) {
+      container.innerHTML = `<div style="text-align: center; color: #7a6a5a;">
+        <div style="font-size: 3rem;">💬</div>
+        <p>Пока нет отзывов. Будьте первым!</p>
       </div>`;
+      btnContainer.innerHTML = '';
+      return;
+    }
+
+    // Определяем, какие отзывы показывать
+    let reviewsToShow = showingAll ? allReviews : allReviews.slice(-3); // последние 3
+    // Если показываем не все, но отзывов всего 3 или меньше, кнопка не нужна
+    const needButton = (allReviews.length > 3) && !showingAll;
+
+    // Генерируем HTML
+    let reviewsHtml = `<div style="font-size: 3rem; margin-bottom: 16px;">💬</div>`;
+    for (const review of reviewsToShow) {
+      const reviewText = review['Текст отзыва'] || review['text'] || '';
+      if (!reviewText.trim()) continue;
+      
+      let authorName = review['Ваше имя'] || review['name'] || '';
+      authorName = authorName.trim();
+      if (authorName === '') authorName = 'Аноним';
+      
+      let rating = parseInt(review['Оценка']) || 5;
+      rating = Math.min(5, Math.max(1, rating));
+      let ratingStars = '';
+      for (let i = 1; i <= 5; i++) ratingStars += i <= rating ? '★' : '☆';
+      
+      const escapeHtml = (str) => {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+          if (m === '&') return '&amp;';
+          if (m === '<') return '&lt;';
+          if (m === '>') return '&gt;';
+          return m;
+        });
+      };
+      
+      reviewsHtml += `
+        <div style="border-top: 1px solid #e2d5c8; padding: 16px 0;">
+          <p style="font-style: italic; margin: 0 0 8px 0;">«${escapeHtml(reviewText)}»</p>
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <strong>— ${escapeHtml(authorName)}</strong>
+            <span style="color: #c7a17a;">${ratingStars}</span>
+          </div>
+        </div>
+      `;
+    }
+    container.innerHTML = reviewsHtml;
+
+    // Управление кнопкой
+<!ДОКТИП html>если (нужнаКнопка) {
+      btnКонтейнер.внутреннийHTML = `<button class="show-more-btn" id="showAllBtn">📖 Показ все точек (${всеОбзоры.длина})</кнопка>`;
+      константа показатьAllBtn = документ.getElementById('showAllBtn');
+      если (показатьAllBtn) {
+        показатьAllBtn.addEventListener('нажмите', () => {
+          показВсе = истинный;
+          renderReviews(); // перерисовываем с показом всех
+        });
+      }
+    } еще {
+      // Если показываем все или отзывов <=3, кнопку убираем
+      btnКонтейнер.внутреннийHTML = '';
+      // Если мы показываем все и отзывов больше 3, можно добавить кнопку "Свернуть" (опционально)
+      если (показВсе && всеОбзоры.длина > 3) {
+        btnКонтейнер.внутреннийHTML = `<button class="show-more-btn" id="hideBtn">⬆️ Свернуть на страницы 3</button>`;
+        константа скрытьBtn = документ.getElementById('hideBtn');
+        если (скрытьBtn) {
+          скрытьBtn.addEventListener('нажмите', () => {
+            показВсе = ложный;
+            renderReviews();
+          });
+        }
+      }
+    }
+  }
+
+  // Загрузка отзывов из API
+  асинхронный функция loadReviews() {
+    константа контейнер = документ.getElementById('обзорыКонтейнер');
+    если (!контейнер) возвращаться;
+    контейнер.внутреннийHTML = '<div style="text-align: center;">Загрузка отзывов...</div>';
+    пытаться {
+      константа ответ = ждать принести(ОБЗОРЫ_API_URL);
+      константа обзоры = ждать ответ.джонсон();
+      если (!обзоры || обзоры.длина === 0) {
+        всеОбзоры = [];
+        renderReviews();
+        возвращаться;
+      }
+      // Фильтруем отзывы с пустым текстом
+      всеОбзоры = обзоры.фильтр(r => {
+        константа текст = r['Текст отзыва'] || r['текст'] || '';
+        возвращаться текст.подрезать() !== '';
+      });
+      // Сортируем по времени? API может возвращать в порядке добавления, оставляем как есть (последние в конце)
+      // Убедимся, что порядок: сначала старые, новые в конце. Просто оставляем.
+      показВсе = ложный;
+      renderReviews();
+    } ловить (ошибка) {
+      консоль.ошибка('Ошибка загрузки отзывов:', ошибка);
+      контейнер.внутреннийHTML = `<div style="выравнивание текста: центр; цвет: #b13e2d;">
+ <div>⚠️ Не удалось загрузить отзывы. Попробуйте позже.</div>
+ </див>`;
+      документ.getElementById('showMoreBtnContainer').внутреннийHTML = '';
     }
   }
   
   loadReviews();
-</script>
-</body>
-</html>
+</сценарий>
+</тело>
+  </html>
